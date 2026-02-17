@@ -22,7 +22,7 @@ class Student:
             else:
                 lecturer.grades[course] = [grade]
         else:
-            return "Ошибка"
+            return NotImplemented
 
     # Overriding the __str__ method
     def __str__(self):
@@ -44,21 +44,21 @@ class Student:
         if isinstance(student, Student):
             return self.average_grade() == student.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
     # Overriding the comparison method <
     def __lt__(self, student):
         if isinstance(student, Student):
             return self.average_grade() < student.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
     # Overriding the comparison method >
     def __gt__(self, student):
         if isinstance(student, Student):
             return self.average_grade() > student.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
     # Method for calculating the average grade for homework assignments
     def average_grade(self):
@@ -116,21 +116,21 @@ class Lecturer(Mentor):
         if isinstance(lecturer, Lecturer):
             return self.average_grade() == lecturer.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
     # Overriding the comparison method <
     def __lt__(self, lecturer):
         if isinstance(lecturer, Lecturer):
             return self.average_grade() < lecturer.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
     # Overriding the comparison method >
     def __gt__(self, lecturer):
         if isinstance(lecturer, Lecturer):
             return self.average_grade() > lecturer.average_grade()
         else:
-            return 'Ошибка'
+            return NotImplemented
 
 
 class Reviewer(Mentor):
@@ -148,7 +148,7 @@ class Reviewer(Mentor):
             else:
                 student.grades[course] = [grade]
         else:
-            return "Ошибка"
+            return NotImplemented
 
 
 def average_grade_homeworks(students_list, course):
@@ -181,39 +181,48 @@ def average_grade_lecturer(lecturer_list, course):
         return 0
 
 
+# Сreate objects of the Student class and add courses to each object.
 student_1 = Student('Peter', 'Parker', 'male')
 student_1.courses_in_progress = ['Python', 'Git']
 student_2 = Student('Mary', 'Jane', 'female')
 student_2.courses_in_progress = ['Python', 'Java']
 
+# Create objects of the Lecturer class and add courses to each object.
 lecturer_1 = Lecturer('Kevin', 'Eastman')
 lecturer_1.courses_attached = ['Python', 'Git']
 lecturer_2 = Lecturer('Peter', 'Laird')
 lecturer_2.courses_attached = ['Python', 'Java']
 
+# Create objects of the Reviewer class and add courses to each object.
 reviewer_1 = Reviewer('Gandalf', 'Gray')
 reviewer_1.courses_attached = ['Git', 'Python']
 reviewer_2 = Reviewer('Radagast', 'Brown')
 reviewer_2.courses_attached = ['Java', 'Python']
 
+# Assigning grades to students using the rate_hw method.
 reviewer_1.rate_hw(student_1, 'Python', 10)
 reviewer_1.rate_hw(student_1, 'Python', 9)
 reviewer_1.rate_hw(student_1, 'Git', 10)
 reviewer_2.rate_hw(student_2, 'Java', 8)
 reviewer_2.rate_hw(student_2, 'Java', 7)
 
+# Adding the student's course to the completed ones.
 student_1.add_courses('Введение в программирование')
+
+# Assigning ratings to lecturers using the rate_lecture method.
 student_1.rate_lecture(lecturer_1, 'Python', 6)
 student_1.rate_lecture(lecturer_1, 'Git', 7)
 student_2.rate_lecture(lecturer_2, 'Python', 7)
 student_2.rate_lecture(lecturer_2, 'Java', 8)
 
+# We display the __str__ method for objects of each class.
 print(f"\nМетод __str__ для класса Student: \n{student_1}")
 print(f"\nМетод __str__ для класса Lecturer: \n{lecturer_1}")
 print(f"\nМетод __str__ для класса Reviewer: \n{reviewer_1}")
 
 print()
 
+# Comparing Student objects by average grade
 print(f"s1 = {student_1.average_grade()} s2 = {student_2.average_grade()}")
 print(f"Результат сравнения студентов (s1 < s2): {student_1 < student_2}")
 print(f"Результат сравнения студентов (s1 > s2): {student_1 > student_2}")
@@ -227,6 +236,7 @@ print(f"Результат сравнения студентов (s1 == s2): {st
 
 print()
 
+# Comparing objects of the Lecturer class by average grade
 print(f"l1 = {lecturer_1.average_grade()} l2 = {lecturer_2.average_grade()}")
 print(f"Результат сравнения лекторов (l1 < l2): {lecturer_1 < lecturer_2}")
 print(f"Результат сравнения лекторов (l1 > l2): {lecturer_1 > lecturer_2}")
@@ -237,7 +247,11 @@ print(f"Результат сравнения лекторов (l1 == l2): {lect
 
 print()
 
-student_avg = average_grade_homeworks([student_1, student_2], 'Python')
-lecturer_avg = average_grade_lecturer([lecturer_1, lecturer_2], 'Python')
-print(f"Средняя оценка всех студентов по курсу Python: {student_avg}")
-print(f"Средняя оценка всех лекторов по курсу Python: {lecturer_avg}")
+# We get the average grade of all class objects for a specific course
+courses = ['Python', 'Java', 'Git']
+
+for course in courses:
+    student_avg = average_grade_homeworks([student_1, student_2], course)
+    lecturer_avg = average_grade_lecturer([lecturer_1, lecturer_2], course)
+    print(f"Средняя оценка всех студентов по курсу {course}: {student_avg}")
+    print(f"Средняя оценка всех лекторов по курсу {course}: {lecturer_avg}")
